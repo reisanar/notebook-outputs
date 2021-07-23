@@ -1,4 +1,4 @@
-# Sample Jupyter Notebook Outputs
+# Sample Notebook Output
 
 Illustrating some notebook outputs in different formats
 
