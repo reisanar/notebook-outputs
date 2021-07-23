@@ -1,2 +1,3 @@
-# notebook-outputs
-Sample Jupyter Notebook Outputs
+# Sample Jupyter Notebook Outputs
+
+Illustrating some notebook outputs in different formats
