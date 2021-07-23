@@ -8,6 +8,6 @@ As exported from Project Jupyter:
 - `.md` format
 - `.pdf` version
 
-Generated with RStudio and RMarkdown through RStudio:
+Generated with RMarkdown through RStudio:
 
 - `.docx` version
