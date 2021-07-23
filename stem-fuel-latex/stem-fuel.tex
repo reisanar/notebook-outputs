@@ -1,0 +1,954 @@
+% Default to the notebook output style
+
+    
+
+
+% Inherit from the specified cell style.
+
+
+
+
+    
+\documentclass[11pt]{article}
+
+    
+    
+    \usepackage[T1]{fontenc}
+    % Nicer default font (+ math font) than Computer Modern for most use cases
+    \usepackage{mathpazo}
+
+    % Basic figure setup, for now with no caption control since it's done
+    % automatically by Pandoc (which extracts ![](path) syntax from Markdown).
+    \usepackage{graphicx}
+    % We will generate all images so they have a width \maxwidth. This means
+    % that they will get their normal width if they fit onto the page, but
+    % are scaled down if they would overflow the margins.
+    \makeatletter
+    \def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth
+    \else\Gin@nat@width\fi}
+    \makeatother
+    \let\Oldincludegraphics\includegraphics
+    % Set max figure width to be 80% of text width, for now hardcoded.
+    \renewcommand{\includegraphics}[1]{\Oldincludegraphics[width=.8\maxwidth]{#1}}
+    % Ensure that by default, figures have no caption (until we provide a
+    % proper Figure object with a Caption API and a way to capture that
+    % in the conversion process - todo).
+    \usepackage{caption}
+    \DeclareCaptionLabelFormat{nolabel}{}
+    \captionsetup{labelformat=nolabel}
+
+    \usepackage{adjustbox} % Used to constrain images to a maximum size 
+    \usepackage{xcolor} % Allow colors to be defined
+    \usepackage{enumerate} % Needed for markdown enumerations to work
+    \usepackage{geometry} % Used to adjust the document margins
+    \usepackage{amsmath} % Equations
+    \usepackage{amssymb} % Equations
+    \usepackage{textcomp} % defines textquotesingle
+    % Hack from http://tex.stackexchange.com/a/47451/13684:
+    \AtBeginDocument{%
+        \def\PYZsq{\textquotesingle}% Upright quotes in Pygmentized code
+    }
+    \usepackage{upquote} % Upright quotes for verbatim code
+    \usepackage{eurosym} % defines \euro
+    \usepackage[mathletters]{ucs} % Extended unicode (utf-8) support
+    \usepackage[utf8x]{inputenc} % Allow utf-8 characters in the tex document
+    \usepackage{fancyvrb} % verbatim replacement that allows latex
+    \usepackage{grffile} % extends the file name processing of package graphics 
+                         % to support a larger range 
+    % The hyperref package gives us a pdf with properly built
+    % internal navigation ('pdf bookmarks' for the table of contents,
+    % internal cross-reference links, web links for URLs, etc.)
+    \usepackage{hyperref}
+    \usepackage{longtable} % longtable support required by pandoc >1.10
+    \usepackage{booktabs}  % table support for pandoc > 1.12.2
+    \usepackage[inline]{enumitem} % IRkernel/repr support (it uses the enumerate* environment)
+    \usepackage[normalem]{ulem} % ulem is needed to support strikethroughs (\sout)
+                                % normalem makes italics be italics, not underlines
+    
+
+    
+    
+    % Colors for the hyperref package
+    \definecolor{urlcolor}{rgb}{0,.145,.698}
+    \definecolor{linkcolor}{rgb}{.71,0.21,0.01}
+    \definecolor{citecolor}{rgb}{.12,.54,.11}
+
+    % ANSI colors
+    \definecolor{ansi-black}{HTML}{3E424D}
+    \definecolor{ansi-black-intense}{HTML}{282C36}
+    \definecolor{ansi-red}{HTML}{E75C58}
+    \definecolor{ansi-red-intense}{HTML}{B22B31}
+    \definecolor{ansi-green}{HTML}{00A250}
+    \definecolor{ansi-green-intense}{HTML}{007427}
+    \definecolor{ansi-yellow}{HTML}{DDB62B}
+    \definecolor{ansi-yellow-intense}{HTML}{B27D12}
+    \definecolor{ansi-blue}{HTML}{208FFB}
+    \definecolor{ansi-blue-intense}{HTML}{0065CA}
+    \definecolor{ansi-magenta}{HTML}{D160C4}
+    \definecolor{ansi-magenta-intense}{HTML}{A03196}
+    \definecolor{ansi-cyan}{HTML}{60C6C8}
+    \definecolor{ansi-cyan-intense}{HTML}{258F8F}
+    \definecolor{ansi-white}{HTML}{C5C1B4}
+    \definecolor{ansi-white-intense}{HTML}{A1A6B2}
+
+    % commands and environments needed by pandoc snippets
+    % extracted from the output of `pandoc -s`
+    \providecommand{\tightlist}{%
+      \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+    \DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+    % Add ',fontsize=\small' for more characters per line
+    \newenvironment{Shaded}{}{}
+    \newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.56,0.13,0.00}{{#1}}}
+    \newcommand{\DecValTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\FloatTok}[1]{\textcolor[rgb]{0.25,0.63,0.44}{{#1}}}
+    \newcommand{\CharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\StringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\CommentTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textit{{#1}}}}
+    \newcommand{\OtherTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{{#1}}}
+    \newcommand{\AlertTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.02,0.16,0.49}{{#1}}}
+    \newcommand{\RegionMarkerTok}[1]{{#1}}
+    \newcommand{\ErrorTok}[1]{\textcolor[rgb]{1.00,0.00,0.00}{\textbf{{#1}}}}
+    \newcommand{\NormalTok}[1]{{#1}}
+    
+    % Additional commands for more recent versions of Pandoc
+    \newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.53,0.00,0.00}{{#1}}}
+    \newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.25,0.44,0.63}{{#1}}}
+    \newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.73,0.40,0.53}{{#1}}}
+    \newcommand{\ImportTok}[1]{{#1}}
+    \newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.73,0.13,0.13}{\textit{{#1}}}}
+    \newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\VariableTok}[1]{\textcolor[rgb]{0.10,0.09,0.49}{{#1}}}
+    \newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.00,0.44,0.13}{\textbf{{#1}}}}
+    \newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.40,0.40,0.40}{{#1}}}
+    \newcommand{\BuiltInTok}[1]{{#1}}
+    \newcommand{\ExtensionTok}[1]{{#1}}
+    \newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.74,0.48,0.00}{{#1}}}
+    \newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.49,0.56,0.16}{{#1}}}
+    \newcommand{\InformationTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    \newcommand{\WarningTok}[1]{\textcolor[rgb]{0.38,0.63,0.69}{\textbf{\textit{{#1}}}}}
+    
+    
+    % Define a nice break command that doesn't care if a line doesn't already
+    % exist.
+    \def\br{\hspace*{\fill} \\* }
+    % Math Jax compatability definitions
+    \def\gt{>}
+    \def\lt{<}
+    % Document parameters
+    \title{stem-fuel}
+    
+    
+    
+
+    % Pygments definitions
+    
+\makeatletter
+\def\PY@reset{\let\PY@it=\relax \let\PY@bf=\relax%
+    \let\PY@ul=\relax \let\PY@tc=\relax%
+    \let\PY@bc=\relax \let\PY@ff=\relax}
+\def\PY@tok#1{\csname PY@tok@#1\endcsname}
+\def\PY@toks#1+{\ifx\relax#1\empty\else%
+    \PY@tok{#1}\expandafter\PY@toks\fi}
+\def\PY@do#1{\PY@bc{\PY@tc{\PY@ul{%
+    \PY@it{\PY@bf{\PY@ff{#1}}}}}}}
+\def\PY#1#2{\PY@reset\PY@toks#1+\relax+\PY@do{#2}}
+
+\expandafter\def\csname PY@tok@w\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.73,0.73}{##1}}}
+\expandafter\def\csname PY@tok@c\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.74,0.48,0.00}{##1}}}
+\expandafter\def\csname PY@tok@k\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.69,0.00,0.25}{##1}}}
+\expandafter\def\csname PY@tok@o\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ow\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@nn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@ne\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.82,0.25,0.23}{##1}}}
+\expandafter\def\csname PY@tok@nv\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@no\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ni\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.60,0.60,0.60}{##1}}}
+\expandafter\def\csname PY@tok@na\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.49,0.56,0.16}{##1}}}
+\expandafter\def\csname PY@tok@nt\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@nd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.67,0.13,1.00}{##1}}}
+\expandafter\def\csname PY@tok@s\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sd\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@si\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@se\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sr\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.40,0.53}{##1}}}
+\expandafter\def\csname PY@tok@ss\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sx\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@m\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@gh\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gu\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.50,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@gd\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.63,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.63,0.00}{##1}}}
+\expandafter\def\csname PY@tok@gr\endcsname{\def\PY@tc##1{\textcolor[rgb]{1.00,0.00,0.00}{##1}}}
+\expandafter\def\csname PY@tok@ge\endcsname{\let\PY@it=\textit}
+\expandafter\def\csname PY@tok@gs\endcsname{\let\PY@bf=\textbf}
+\expandafter\def\csname PY@tok@gp\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,0.50}{##1}}}
+\expandafter\def\csname PY@tok@go\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.53,0.53,0.53}{##1}}}
+\expandafter\def\csname PY@tok@gt\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.27,0.87}{##1}}}
+\expandafter\def\csname PY@tok@err\endcsname{\def\PY@bc##1{\setlength{\fboxsep}{0pt}\fcolorbox[rgb]{1.00,0.00,0.00}{1,1,1}{\strut ##1}}}
+\expandafter\def\csname PY@tok@kc\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kd\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kn\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@kr\endcsname{\let\PY@bf=\textbf\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@bp\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.50,0.00}{##1}}}
+\expandafter\def\csname PY@tok@fm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.00,0.00,1.00}{##1}}}
+\expandafter\def\csname PY@tok@vc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vg\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@vm\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.10,0.09,0.49}{##1}}}
+\expandafter\def\csname PY@tok@sa\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sc\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@dl\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s2\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@sh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@s1\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.73,0.13,0.13}{##1}}}
+\expandafter\def\csname PY@tok@mb\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mf\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mh\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mi\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@il\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@mo\endcsname{\def\PY@tc##1{\textcolor[rgb]{0.40,0.40,0.40}{##1}}}
+\expandafter\def\csname PY@tok@ch\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cm\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cpf\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@c1\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+\expandafter\def\csname PY@tok@cs\endcsname{\let\PY@it=\textit\def\PY@tc##1{\textcolor[rgb]{0.25,0.50,0.50}{##1}}}
+
+\def\PYZbs{\char`\\}
+\def\PYZus{\char`\_}
+\def\PYZob{\char`\{}
+\def\PYZcb{\char`\}}
+\def\PYZca{\char`\^}
+\def\PYZam{\char`\&}
+\def\PYZlt{\char`\<}
+\def\PYZgt{\char`\>}
+\def\PYZsh{\char`\#}
+\def\PYZpc{\char`\%}
+\def\PYZdl{\char`\$}
+\def\PYZhy{\char`\-}
+\def\PYZsq{\char`\'}
+\def\PYZdq{\char`\"}
+\def\PYZti{\char`\~}
+% for compatibility with earlier versions
+\def\PYZat{@}
+\def\PYZlb{[}
+\def\PYZrb{]}
+\makeatother
+
+
+    % Exact colors from NB
+    \definecolor{incolor}{rgb}{0.0, 0.0, 0.5}
+    \definecolor{outcolor}{rgb}{0.545, 0.0, 0.0}
+
+
+
+    
+    % Prevent overflowing lines due to hard-to-break entities
+    \sloppy 
+    % Setup hyperref package
+    \hypersetup{
+      breaklinks=true,  % so long urls are correctly broken across lines
+      colorlinks=true,
+      urlcolor=urlcolor,
+      linkcolor=linkcolor,
+      citecolor=citecolor,
+      }
+    % Slightly bigger margins than the latex defaults
+    
+    \geometry{verbose,tmargin=1in,bmargin=1in,lmargin=1in,rmargin=1in}
+    
+    
+
+    \begin{document}
+    
+    
+    \maketitle
+    
+    
+
+    
+    \hypertarget{vehicle-fuel-economy-estimates-data-set}{%
+\section{Vehicle Fuel Economy Estimates Data
+Set}\label{vehicle-fuel-economy-estimates-data-set}}
+
+\emph{Use this notebook to practice your exploratory data analysis and
+visualization skills.}
+
+\textbf{EXPLORE:} Click on the Edit App button in the top right corner
+of this page, to interact with this Jupyter notebook To navigate through
+\textbf{this notebook} simply press the shift + Enter keys to run each
+\textbf{block of code}.
+
+You can include new blocks of code or text throughout the notebook to
+continue exploring and programming with R.
+
+(New to Jupyter notebooks? See the
+\href{https://nbviewer.jupyter.org/github/ipython/ipython/blob/3.x/examples/Notebook/Index.ipynb}{help
+page} for more on working with Jupyter notebooks)
+
+    The \textbf{original dataset} is obtained from FuelEconomy.gov Web
+Services. The 1984-2017 fuel economy data is produced during vehicle
+testing at the \textbf{Environmental Protection Agency's (EPA) National
+Vehicle and Fuel Emissions Laboratory} in Ann Arbor, Michigan, and by
+vehicle manufacturers with EPA oversight. Check also the data in this
+\href{https://www.kaggle.com/epa/fuel-economy}{Kaggle page}.
+
+The version of the data used in this notebook is also available in
+\href{https://github.com/reisanar/datasets/blob/master/fuel.csv}{this
+repo}.
+
+    \hypertarget{load-packages}{%
+\subsection{Load packages}\label{load-packages}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}151}]:} \PY{c+c1}{\PYZsh{} use data science tools from the tidyverse}
+          \PY{n+nf}{library}\PY{p}{(}\PY{n}{tidyverse}\PY{p}{)}
+\end{Verbatim}
+
+
+    \hypertarget{read-the-data}{%
+\subsection{Read the data}\label{read-the-data}}
+
+The adapted dataset used in this notebook contains more than 38,000
+observations and 81 variables are available! (We will focus on a small
+subset of the attributes for this initial exploration). A related data
+dictionary can be found at https://www.fueleconomy.gov/feg/ws/
+
+EPA's fuel economy values are good estimates of the fuel economy a
+typical driver will achieve under average driving conditions and provide
+a good basis to compare one vehicle to another. Fuel economy varies,
+sometimes significantly, based on driving conditions, driving style, and
+other factors.
+
+Below we read the \texttt{.csv} file using \texttt{readr::read\_csv()}
+(the \texttt{readr} package is part of the \texttt{tidyverse})
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}152}]:} \PY{n}{fuel} \PY{o}{\PYZlt{}\PYZhy{}} \PY{n+nf}{read\PYZus{}csv}\PY{p}{(}\PY{l+s}{\PYZdq{}}\PY{l+s}{../data/fuel.csv\PYZdq{}}\PY{p}{,} \PY{n}{col\PYZus{}types} \PY{o}{=} \PY{n+nf}{cols}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    Check the dimensions of the dataset:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}153}]:} \PY{n+nf}{dim}\PY{p}{(}\PY{n}{fuel}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 38113
+\item 81
+\end{enumerate*}
+
+
+    
+    \hypertarget{data-exploration}{%
+\subsection{Data Exploration}\label{data-exploration}}
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}154}]:} \PY{c+c1}{\PYZsh{} random sample of the data}
+          \PY{n+nf}{set.seed}\PY{p}{(}\PY{l+m}{217}\PY{p}{)}      \PY{c+c1}{\PYZsh{} this sets a random seed for reproducibility}
+          \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+             \PY{n+nf}{sample\PYZus{}n}\PY{p}{(}\PY{l+m}{7}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll}
+ vehicle\_id & year & make & model & class & drive & transmission & transmission\_type & engine\_index & engine\_descriptor & ⋯ & hours\_to\_charge\_ac\_240v & composite\_city\_mpg & composite\_highway\_mpg & composite\_combined\_mpg & range\_ft1 & city\_range\_ft1 & highway\_range\_ft1 & range\_ft2 & city\_range\_ft2 & highway\_range\_ft2\\
+\hline
+	 13264                       & 1997                        & Honda                       & Del Sol                     & Two Seaters                 & Front-Wheel Drive           & Manual 5-Speed              & NA                          & 26010                       & VTEC       (FFS)            & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	  4074                       & 1987                        & Jeep                        & Cherokee/Wagoneer 4WD       & Special Purpose Vehicles    & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & SIL                         &  1998                       & (FFS)      (SPFI)           & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	  8495                       & 1991                        & Ford                        & Bronco 4WD                  & Special Purpose Vehicles    & 4-Wheel or All-Wheel Drive  & Automatic 4-Speed           & NA                          &  3824                       & (FFS)                       & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	 32292                       & 2012                        & Porsche                     & New 911 Carrera S           & Minicompact Cars            & Rear-Wheel Drive            & Auto(AM-S7)                 & NA                          &   106                       & SIDI                        & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	  1038                       & 1985                        & Chevrolet                   & S10 Blazer 2WD              & Special Purpose Vehicle 2WD & Rear-Wheel Drive            & Manual 4-Speed              & SIL                         &  4808                       & (FFS)                       & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	 23313                       & 2007                        & Audi                        & S4 Avant                    & Small Station Wagons        & 4-Wheel or All-Wheel Drive  & Automatic (S6)              & 3MODE CLKUP                 &     0                       & NA                          & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+	 24783                       & 2008                        & BMW                         & 335ci                       & Subcompact Cars             & Rear-Wheel Drive            & Manual 6-Speed              & NA                          &     0                       & NA                          & ⋯                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & 0                           & NA                          & 0                           & 0                          \\
+\end{tabular}
+
+
+    
+    We can see the range (minimum and maximum) of a variable using the
+\texttt{range()} function:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}155}]:} \PY{n+nf}{range}\PY{p}{(}\PY{n}{fuel}\PY{o}{\PYZdl{}}\PY{n}{year}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{enumerate*}
+\item 1984
+\item 2017
+\end{enumerate*}
+
+
+    
+    We can also use the \texttt{dplyr::sumarize()} function to get some
+summaries for certain variables:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}156}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize}\PY{p}{(}\PY{n}{minmax\PYZus{}year} \PY{o}{=} \PY{n+nf}{range}\PY{p}{(}\PY{n}{year}\PY{p}{)}\PY{p}{,} 
+                      \PY{n}{minmax\PYZus{}fuel\PYZus{}cost} \PY{o}{=} \PY{n+nf}{range}\PY{p}{(}\PY{n}{annual\PYZus{}fuel\PYZus{}cost\PYZus{}ft1}\PY{p}{)}\PY{p}{,} 
+                      \PY{n}{minmax\PYZus{}barrels} \PY{o}{=} \PY{n+nf}{range}\PY{p}{(}\PY{n}{annual\PYZus{}consumption\PYZus{}in\PYZus{}barrels\PYZus{}ft1}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lll}
+ minmax\_year & minmax\_fuel\_cost & minmax\_barrels\\
+\hline
+	 1984     &  500     &  0.06000\\
+	 2017     & 6050     & 47.08714\\
+\end{tabular}
+
+
+    
+    For variables that are encoded as categorical, we can also get counts.
+First, below is a trick to find which variables are encoded as
+\emph{character} (this will help you determine which ones are actually
+categorical variables: for example an email is stored as a character,
+but we may not treat is a category since it may be unique, while colors
+and brands could be treated as categorical):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}157}]:} \PY{c+c1}{\PYZsh{} select variables that are of type character}
+          \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+             \PY{n+nf}{select\PYZus{}if}\PY{p}{(}\PY{n}{is.character}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllllllll}
+ make & model & class & drive & transmission & transmission\_type & engine\_descriptor & fuel\_type & fuel\_type\_1 & my\_mpg\_data & alternative\_fuel\_technology\\
+\hline
+	 Alfa Romeo                  & GT V6 2.5                   & Minicompact Cars            & NA                          & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 Alfa Romeo                  & GT V6 2.5                   & Minicompact Cars            & NA                          & Manual 5-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 Alfa Romeo                  & Spider Veloce 2000          & Two Seaters                 & NA                          & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 Alfa Romeo                  & Spider Veloce 2000          & Two Seaters                 & NA                          & Manual 5-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 AM General                  & DJ Po Vehicle 2WD           & Special Purpose Vehicle 2WD & 2-Wheel Drive               & Automatic 3-Speed           & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 AM General                  & DJ Po Vehicle 2WD           & Special Purpose Vehicle 2WD & 2-Wheel Drive               & Automatic 3-Speed           & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 AM General                  & FJ8c Post Office            & Special Purpose Vehicle 2WD & 2-Wheel Drive               & Automatic 3-Speed           & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 AM General                  & FJ8c Post Office            & Special Purpose Vehicle 2WD & 2-Wheel Drive               & Automatic 3-Speed           & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)(SIL) CA model         & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle 4WD                   & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Automatic 3-Speed           & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS)(SIL) CA model         & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 4-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS)                       & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 American Motors Corporation & Eagle SX/4 4WD              & Special Purpose Vehicle 4WD & 4-Wheel or All-Wheel Drive  & Manual 5-Speed              & NA                          & (FFS) CA model              & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 Aston Martin                & Lagonda                     & Subcompact Cars             & NA                          & Automatic 3-Speed           & NA                          & (GUZZLER)                   & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 Aston Martin                & Lagonda                     & Subcompact Cars             & NA                          & Automatic 3-Speed           & NA                          & (GUZZLER) CA model          & Regular                     & Regular Gasoline            & N                           & NA                         \\
+	 ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮ & ⋮\\
+	 Volkswagen                         & Jetta                              & Compact Cars                       & Front-Wheel Drive                  & Automatic (S6)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Jetta                              & Compact Cars                       & Front-Wheel Drive                  & Manual 5-Speed                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Jetta                              & Compact Cars                       & Front-Wheel Drive                  & Manual 6-Speed                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Passat                             & Midsize Cars                       & Front-Wheel Drive                  & Auto(AM-S6)                        & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Passat                             & Midsize Cars                       & Front-Wheel Drive                  & Automatic (S6)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Tiguan                             & Small Sport Utility Vehicle 2WD    & Front-Wheel Drive                  & Automatic (S6)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Tiguan 4motion                     & Small Sport Utility Vehicle 4WD    & All-Wheel Drive                    & Automatic (S6)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volkswagen                         & Touareg                            & Standard Sport Utility Vehicle 4WD & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 AWD                            & Compact Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 AWD                            & Compact Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 CC AWD                         & Compact Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 FWD                            & Compact Cars                       & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 Inscription AWD                & Compact Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 Inscription FWD                & Compact Cars                       & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S60 Polestar AWD                   & Compact Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S90 AWD                            & Midsize Cars                       & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & S90 FWD                            & Midsize Cars                       & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V60 AWD                            & Small Station Wagons               & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V60 AWD                            & Small Station Wagons               & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V60 CC AWD                         & Small Station Wagons               & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V60 FWD                            & Small Station Wagons               & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V60 Polestar AWD                   & Small Station Wagons               & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & V90 CC AWD                         & Midsize Station Wagons             & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC60 AWD                           & Small Sport Utility Vehicle 4WD    & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC60 AWD                           & Small Sport Utility Vehicle 4WD    & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC60 FWD                           & Small Sport Utility Vehicle 2WD    & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Regular                            & Regular Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC90 AWD                           & Standard Sport Utility Vehicle 4WD & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC90 AWD                           & Standard Sport Utility Vehicle 4WD & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+	 Volvo                              & XC90 AWD PHEV                      & Standard Sport Utility Vehicle 4WD & All-Wheel Drive                    & Automatic (S8)                     & NA                                 & SIDI; PHEV                         & Premium and Electricity            & Premium Gasoline                   & N                                  & Plug-in Hybrid                    \\
+	 Volvo                              & XC90 FWD                           & Standard Sport Utility Vehicle 2WD & Front-Wheel Drive                  & Automatic (S8)                     & NA                                 & SIDI                               & Premium                            & Premium Gasoline                   & N                                  & NA                                \\
+\end{tabular}
+
+
+    
+    Let us select check the number of observations for each class of vehicle
+(\texttt{class})
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}158}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{class}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{count}\PY{p}{(}\PY{p}{)}
+          \PY{c+c1}{\PYZsh{} you could also use group\PYZus{}by() followed by summarize() where the }
+          \PY{c+c1}{\PYZsh{} summary counts the number of rows using the n() function}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|ll}
+ class & n\\
+\hline
+	 Compact Cars                       & 5508                              \\
+	 Large Cars                         & 1891                              \\
+	 Midsize Cars                       & 4395                              \\
+	 Midsize Station Wagons             &  523                              \\
+	 Midsize-Large Station Wagons       &  656                              \\
+	 Minicompact Cars                   & 1260                              \\
+	 Minivan - 2WD                      &  342                              \\
+	 Minivan - 4WD                      &   47                              \\
+	 Small Pickup Trucks                &  538                              \\
+	 Small Pickup Trucks 2WD            &  436                              \\
+	 Small Pickup Trucks 4WD            &  218                              \\
+	 Small Sport Utility Vehicle 2WD    &  403                              \\
+	 Small Sport Utility Vehicle 4WD    &  526                              \\
+	 Small Station Wagons               & 1499                              \\
+	 Special Purpose Vehicle            &    1                              \\
+	 Special Purpose Vehicle 2WD        &  613                              \\
+	 Special Purpose Vehicle 4WD        &  302                              \\
+	 Special Purpose Vehicles           & 1455                              \\
+	 Special Purpose Vehicles/2wd       &    2                              \\
+	 Special Purpose Vehicles/4wd       &    2                              \\
+	 Sport Utility Vehicle - 2WD        & 1627                              \\
+	 Sport Utility Vehicle - 4WD        & 2082                              \\
+	 Standard Pickup Trucks             & 2354                              \\
+	 Standard Pickup Trucks 2WD         & 1177                              \\
+	 Standard Pickup Trucks 4WD         &  986                              \\
+	 Standard Pickup Trucks/2wd         &    4                              \\
+	 Standard Sport Utility Vehicle 2WD &  182                              \\
+	 Standard Sport Utility Vehicle 4WD &  434                              \\
+	 Subcompact Cars                    & 4872                              \\
+	 Two Seaters                        & 1886                              \\
+	 Vans                               & 1141                              \\
+	 Vans Passenger                     &    2                              \\
+	 Vans, Cargo Type                   &  438                              \\
+	 Vans, Passenger Type               &  311                              \\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}159}]:} \PY{c+c1}{\PYZsh{} alternative: using the group\PYZus{}by + summarize combination}
+          \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize}\PY{p}{(}\PY{n}{n} \PY{o}{=} \PY{n+nf}{n}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|ll}
+ fuel\_type & n\\
+\hline
+	 CNG                         &    60                      \\
+	 Diesel                      &  1014                      \\
+	 Electricity                 &   133                      \\
+	 Gasoline or E85             &  1223                      \\
+	 Gasoline or natural gas     &    20                      \\
+	 Gasoline or propane         &     8                      \\
+	 Midgrade                    &    77                      \\
+	 Premium                     & 10133                      \\
+	 Premium and Electricity     &    25                      \\
+	 Premium Gas or Electricity  &    18                      \\
+	 Premium or E85              &   122                      \\
+	 Regular                     & 25258                      \\
+	 Regular Gas and Electricity &    20                      \\
+	 Regular Gas or Electricity  &     2                      \\
+\end{tabular}
+
+
+    
+    When working with larger datasets like this one, chances are that
+several observations have missing values (\texttt{NA}) in some of the
+attributes available in the dataset. It is good practice to get a sense
+of the proportion of missing values for different variables. This may
+help you make design choices when exploring predictive models (e.g., how
+and what type of data imputation to incorporate - if any -, or deciding
+which variables have enough variation and are good choices for further
+analysis).
+
+Below is a trick to easily get this information using tools from
+\texttt{dplyr}:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}160}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize\PYZus{}all}\PY{p}{(}\PY{o}{\PYZti{}}\PY{n+nf}{sum}\PY{p}{(}\PY{n+nf}{is.na}\PY{p}{(}\PY{n}{.)}\PY{p}{)}\PY{o}{/}\PY{n+nf}{n}\PY{p}{(}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllllll}
+ vehicle\_id & year & make & model & class & drive & transmission & transmission\_type & engine\_index & engine\_descriptor & ⋯ & hours\_to\_charge\_ac\_240v & composite\_city\_mpg & composite\_highway\_mpg & composite\_combined\_mpg & range\_ft1 & city\_range\_ft1 & highway\_range\_ft1 & range\_ft2 & city\_range\_ft2 & highway\_range\_ft2\\
+\hline
+	 0            & 0            & 0            & 0            & 0            & 0.0311967    & 0.0002886154 & 0.6052528    & 0            & 0.4045864    & ⋯            & 0            & 0            & 0            & 0            & 0            & 0            & 0            & 1            & 0            & 0           \\
+\end{tabular}
+
+
+    
+    \begin{quote}
+The code above tells you that we have no missing values for the
+variables \texttt{year}, \texttt{make}, \texttt{model} and others; and
+it also indicates that the attribute \texttt{range\_ft2} is an empty
+column (all observations have a missing value there). \textbf{Quick
+explanation}: \texttt{is.na()} returns either \texttt{TRUE} if the
+element is missing, and \texttt{FALSE} otherwise. When combined with the
+function \texttt{sum()}, any value of \texttt{TRUE} will be understood
+as a \texttt{1}, and instances of \texttt{FALSE} as \texttt{0} (this is
+known as \emph{\textbf{coercion}}). Therefore, adding all the
+\texttt{1}s will tell you how many observations have a missing value,
+and dividing by the number of observations (i.e., using \texttt{n()})
+will give the proportion. Documentation for the
+\texttt{summarize\_all()} function (and other similar functions) can be
+found
+\href{https://dplyr.tidyverse.org/reference/summarise_all.html}{here}.
+Again, this shows the power of \texttt{dplyr}: just a few lines of code
+can give you very good information.
+\end{quote}
+
+    \textbf{Practice}: which other type of summaries can you create? Try
+grouping by \emph{multiple} variables to analyze that set of
+observationss (e.g., grouping by \texttt{make} and \texttt{transmission}
+to analyze the fuel efficiency of cars in the different groups)
+
+    \hypertarget{some-data-visualizations}{%
+\subsection{Some data visualizations}\label{some-data-visualizations}}
+
+There are many observations and attributes (variables) available in this
+dataset. We will generate some data visualizations in this notebook that
+can help us confirm some of the things we would expect from the
+evolution and progress made in car manufacturing in recent years.
+
+    The purpose of EPA's fuel economy estimates is to provide a reliable
+basis for comparing vehicles. Most vehicles in the database (other than
+plug-in hybrids) have three fuel economy estimates: - a ``city''
+estimate that represents urban driving, in which a vehicle is started in
+the morning (after being parked all night) and driven in stop-and-go
+traffic;
+
+\begin{itemize}
+\item
+  a ``highway'' estimate that represents a mixture of rural and
+  interstate highway driving in a warmed-up vehicle, typical of longer
+  trips in free-flowing traffic;
+\item
+  and a ``combined'' estimate that represents a combination of city
+  driving (55\%) and highway driving (45\%). Estimates for all vehicles
+  are based on laboratory testing under standardized conditions to allow
+  for fair comparisons.
+\end{itemize}
+
+The database also provides annual fuel cost estimates, rounded to the
+nearest \textbackslash{}\$50, for each vehicle. The estimates are based
+on the assumptions that you travel 15,000 miles per year (55\% under
+city driving conditions and 45\% under highway conditions) and that fuel
+costs \textbackslash{}\$2.33/gallon for regular unleaded gasoline,
+\textbackslash{}\$2.58/gallon for mid-grade unleaded gasoline, and
+\textbackslash{}\$2.82/gallon for premium.
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}161}]:} \PY{n+nf}{ggplot}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{fuel}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}bar}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{engine\PYZus{}cylinders} \PY{p}{)}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Number of cylinders\PYZdq{}}\PY{p}{,} \PY{n}{title} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Cylinders distributions\PYZdq{}}\PY{p}{,} 
+                \PY{n}{subtitle} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Vehicles data for years 1984 to 2017\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+Warning message:
+“Removed 136 rows containing non-finite values (stat\_count).”
+    \end{Verbatim}
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_25_2.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    If you look to the far right in the above plot, you will notice some
+vehicles with 16 cylinders. Let us use the \texttt{dplyr::filter()}
+function to find those observations:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}162}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{filter}\PY{p}{(}\PY{n}{engine\PYZus{}cylinders} \PY{o}{==} \PY{l+m}{16}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{select}\PY{p}{(}\PY{n}{year}\PY{p}{,} \PY{n}{make}\PY{p}{,} \PY{n}{model}\PY{p}{,} \PY{n}{drive}\PY{p}{,} \PY{n}{transmission}\PY{p}{,} 
+                   \PY{n}{engine\PYZus{}cylinders}\PY{p}{,} \PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{city\PYZus{}mpg\PYZus{}ft1}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|llllllll}
+ year & make & model & drive & transmission & engine\_cylinders & fuel\_type & city\_mpg\_ft1\\
+\hline
+	 2006                       & Bugatti                    & Veyron                     & 4-Wheel or All-Wheel Drive & Automatic (S6)             & 16                         & Premium                    & 8                         \\
+	 2008                       & Bugatti                    & Veyron                     & 4-Wheel or All-Wheel Drive & Automatic (S6)             & 16                         & Premium                    & 8                         \\
+	 2010                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Automatic (S7)             & 16                         & Premium                    & 8                         \\
+	 2011                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Automatic (S7)             & 16                         & Premium                    & 8                         \\
+	 2012                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Automatic (S7)             & 16                         & Premium                    & 8                         \\
+	 2013                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Auto(AM-S7)                & 16                         & Premium                    & 8                         \\
+	 2014                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Auto(AM-S7)                & 16                         & Premium                    & 8                         \\
+	 2015                       & Bugatti                    & Veyron                     & All-Wheel Drive            & Auto(AM-S7)                & 16                         & Premium                    & 8                         \\
+\end{tabular}
+
+
+    
+    The Bugatti Veyron: million dollars cars! Learn more about this car
+\href{https://en.wikipedia.org/wiki/Bugatti_Veyron}{here}.
+
+    In the set of slides for \texttt{ggplot2} we studied the relationship
+between the engine size (\texttt{engine\_displacement}) and the fuel
+efficiency. Let us do something similar here:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}163}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{filter}\PY{p}{(}\PY{n}{engine\PYZus{}displacement} \PY{o}{\PYZgt{}} \PY{l+m}{0} \PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} \PY{c+c1}{\PYZsh{} make sure we have engine size values}
+            \PY{n+nf}{ggplot}\PY{p}{(}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}point}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{engine\PYZus{}displacement}\PY{p}{,} 
+                           \PY{n}{y} \PY{o}{=} \PY{n}{city\PYZus{}mpg\PYZus{}ft1}\PY{p}{,} \PY{n}{color} \PY{o}{=} \PY{n}{fuel\PYZus{}type}\PY{p}{)}\PY{p}{,} 
+                       \PY{n}{alpha} \PY{o}{=} \PY{l+m}{0.3}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme\PYZus{}minimal}\PY{p}{(}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Engine displacement (in liters)\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{y} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{City MPG\PYZdq{}}\PY{p}{,} 
+                  \PY{n}{color} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Type of fuel\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_30_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \hypertarget{renewable-energy}{%
+\subsection{Renewable energy}\label{renewable-energy}}
+
+Let us aggregate data by fuel type and create a new variable called to
+identify if the energy source is renewable or not. We can also generate
+an estimate of efficiency and
+\href{https://www.epa.gov/greenvehicles/greenhouse-gas-emissions-typical-passenger-vehicle}{tailpipe
+carbon dioxide} (CO2) (\texttt{tailpipe\_co2\_in\_grams\_mile\_ft1})
+averages by fuel type (\texttt{fuel\_type}).
+
+A good reference to learn more about this can be found in the (US
+Department of Energy) \emph{Energy Efficiency and Renewable Energy}
+page: https://afdc.energy.gov/fuels/
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}164}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{count}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|ll}
+ fuel\_type & n\\
+\hline
+	 CNG                         &    60                      \\
+	 Diesel                      &  1014                      \\
+	 Electricity                 &   133                      \\
+	 Gasoline or E85             &  1223                      \\
+	 Gasoline or natural gas     &    20                      \\
+	 Gasoline or propane         &     8                      \\
+	 Midgrade                    &    77                      \\
+	 Premium                     & 10133                      \\
+	 Premium and Electricity     &    25                      \\
+	 Premium Gas or Electricity  &    18                      \\
+	 Premium or E85              &   122                      \\
+	 Regular                     & 25258                      \\
+	 Regular Gas and Electricity &    20                      \\
+	 Regular Gas or Electricity  &     2                      \\
+\end{tabular}
+
+
+    
+    Below we use \texttt{dplyr::mutate()} to create a new column, based on
+the value of \texttt{fuel\_type} containing the word ``Electricity'' or
+``E85''. This is done with the help of the \texttt{str\_detect()}
+function from the \texttt{stringr} package (part of the
+\texttt{tidyverse})
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}165}]:} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{mutate}\PY{p}{(}\PY{n}{renewable} \PY{o}{=} \PY{n+nf}{case\PYZus{}when}\PY{p}{(}
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Elect\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{E85\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{No\PYZdq{}}
+                    \PY{p}{)}
+                  \PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{renewable}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{count}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|ll}
+ renewable & n\\
+\hline
+	 No    & 36570\\
+	 Yes   &  1543\\
+\end{tabular}
+
+
+    
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}166}]:} \PY{c+c1}{\PYZsh{} average tailpipe\PYZus{}co2\PYZus{}in\PYZus{}grams\PYZus{}mile\PYZus{}ft1}
+          \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{mutate}\PY{p}{(}\PY{n}{renewable} \PY{o}{=} \PY{n+nf}{case\PYZus{}when}\PY{p}{(}
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Elect\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{E85\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{No\PYZdq{}}
+                    \PY{p}{)}
+                  \PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{renewable}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize}\PY{p}{(}\PY{n}{average\PYZus{}co2} \PY{o}{=} \PY{n+nf}{mean}\PY{p}{(}\PY{n}{tailpipe\PYZus{}co2\PYZus{}in\PYZus{}grams\PYZus{}mile\PYZus{}ft1}\PY{p}{,} \PY{n}{na.rm} \PY{o}{=} \PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,} 
+                      \PY{n}{average\PYZus{}efficiency} \PY{o}{=} \PY{n+nf}{mean}\PY{p}{(}\PY{n}{combined\PYZus{}mpg\PYZus{}ft1}\PY{p}{,} \PY{n}{na.rm} \PY{o}{=} \PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{tabular}{r|lll}
+ renewable & average\_co2 & average\_efficiency\\
+\hline
+	 No       & 473.3132 & 20.01709\\
+	 Yes      & 459.6839 & 24.93195\\
+\end{tabular}
+
+
+    
+    We will create a simple plot comparing the available observations and
+the variable \texttt{renewable}:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}167}]:} \PY{c+c1}{\PYZsh{} create auxiliary dataframe with summaries}
+          \PY{n}{fuel\PYZus{}ave} \PY{o}{\PYZlt{}\PYZhy{}} \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{mutate}\PY{p}{(}\PY{n}{renewable} \PY{o}{=} \PY{n+nf}{case\PYZus{}when}\PY{p}{(}
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Elect\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{pattern} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{E85\PYZdq{}}\PY{p}{)} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{Yes\PYZdq{}}\PY{p}{,} 
+                     \PY{k+kc}{TRUE} \PY{o}{\PYZti{}} \PY{l+s}{\PYZdq{}}\PY{l+s}{No\PYZdq{}}
+                    \PY{p}{)}
+                  \PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{n}{year}\PY{p}{,} \PY{n}{renewable}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize}\PY{p}{(}\PY{n}{average\PYZus{}co2} \PY{o}{=} \PY{n+nf}{mean}\PY{p}{(}\PY{n}{tailpipe\PYZus{}co2\PYZus{}in\PYZus{}grams\PYZus{}mile\PYZus{}ft1}\PY{p}{,} \PY{n}{na.rm} \PY{o}{=} \PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,} 
+                      \PY{n}{average\PYZus{}efficiency} \PY{o}{=} \PY{n+nf}{mean}\PY{p}{(}\PY{n}{combined\PYZus{}mpg\PYZus{}ft1}\PY{p}{,} \PY{n}{na.rm} \PY{o}{=} \PY{n+nb+bp}{T}\PY{p}{)}\PY{p}{,} 
+                      \PY{n}{quantity} \PY{o}{=} \PY{n+nf}{n}\PY{p}{(}\PY{p}{)}\PY{p}{,} 
+                     \PY{n}{.groups} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{drop\PYZdq{}}\PY{p}{)}
+\end{Verbatim}
+
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}168}]:} \PY{n+nf}{ggplot}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{fuel\PYZus{}ave}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}point}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{year}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{n}{average\PYZus{}efficiency}\PY{p}{,} 
+                           \PY{n}{color} \PY{o}{=} \PY{n}{renewable}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n}{quantity}\PY{p}{)}\PY{p}{,} 
+                       \PY{n}{alpha} \PY{o}{=} \PY{l+m}{0.5}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Year\PYZdq{}}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Average efficiency (combined MPG)\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{title} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Average efficiency evolution: renewable vs non\PYZhy{}renewable\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{color} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Renewable?\PYZdq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Observations\PYZdq{}}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme\PYZus{}minimal}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_38_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    We can also check density plots:
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}169}]:} \PY{n+nf}{ggplot}\PY{p}{(}\PY{n}{data} \PY{o}{=} \PY{n}{fuel\PYZus{}ave}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}density}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{average\PYZus{}efficiency}\PY{p}{,} \PY{n}{fill} \PY{o}{=} \PY{n}{renewable}\PY{p}{)}\PY{p}{,} 
+                       \PY{n}{alpha} \PY{o}{=} \PY{l+m}{0.5}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Average efficiency (combined MPG)\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{fill} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Renewable?\PYZdq{}}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{scale\PYZus{}fill\PYZus{}viridis\PYZus{}d}\PY{p}{(}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme\PYZus{}minimal}\PY{p}{(}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme}\PY{p}{(}\PY{n}{legend.position} \PY{o}{=} \PY{n+nf}{c}\PY{p}{(}\PY{l+m}{0.8}\PY{p}{,}\PY{l+m}{0.7}\PY{p}{)}\PY{p}{)} \PY{c+c1}{\PYZsh{} adjust the legend position}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_40_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    Finally, we analyze the relationship between gas emissions and fuel
+efficiency (ignoring electric cars):
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}170}]:} \PY{n}{fuel\PYZus{}ave} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}} 
+            \PY{n+nf}{filter}\PY{p}{(}\PY{o}{!}\PY{n+nf}{str\PYZus{}detect}\PY{p}{(}\PY{n}{fuel\PYZus{}type}\PY{p}{,} \PY{l+s}{\PYZdq{}}\PY{l+s}{Elect\PYZdq{}}\PY{p}{)}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{ggplot}\PY{p}{(}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}point}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{average\PYZus{}co2}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{n}{average\PYZus{}efficiency}\PY{p}{,} 
+                           \PY{n}{color} \PY{o}{=} \PY{n}{renewable}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{n}{quantity}\PY{p}{)}\PY{p}{,} 
+                       \PY{n}{alpha} \PY{o}{=} \PY{l+m}{0.3}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Average efficiency (combined MPG)\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{y} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Average tailpipe (CO2 in grams per mile)\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{color} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Renewable?\PYZdq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Observations\PYZdq{}}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme\PYZus{}minimal}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_42_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Practice}: explore the relationship between other variables. Can
+you characterize the trends you observe? How about the number of unique
+models over the years?
+
+    \begin{Verbatim}[commandchars=\\\{\}]
+{\color{incolor}In [{\color{incolor}171}]:} \PY{c+c1}{\PYZsh{} sample solution: notice the custom colors using HEX codes}
+          \PY{n}{fuel} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{group\PYZus{}by}\PY{p}{(}\PY{n}{year}\PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{summarize}\PY{p}{(}\PY{n}{diff\PYZus{}model} \PY{o}{=} \PY{n+nf}{length}\PY{p}{(}\PY{n+nf}{unique}\PY{p}{(}\PY{n}{model}\PY{p}{)}\PY{p}{)} 
+                      \PY{p}{)} \PY{o}{\PYZpc{}\PYZgt{}\PYZpc{}}
+            \PY{n+nf}{ggplot}\PY{p}{(}\PY{n+nf}{aes}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{n}{year}\PY{p}{,} \PY{n}{y} \PY{o}{=} \PY{n}{diff\PYZus{}model}\PY{p}{)}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}line}\PY{p}{(}\PY{n}{color} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZsh{}532d8e\PYZdq{}}\PY{p}{,} \PY{n}{size} \PY{o}{=} \PY{l+m}{2}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{geom\PYZus{}point}\PY{p}{(}\PY{n}{color} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{grey\PYZdq{}}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{labs}\PY{p}{(}\PY{n}{x} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{\PYZdq{}}\PY{p}{,}  \PY{n}{y} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Unique model count\PYZdq{}}\PY{p}{,} 
+                 \PY{n}{title} \PY{o}{=} \PY{l+s}{\PYZdq{}}\PY{l+s}{Unique models considered by EPA over the years\PYZdq{}}\PY{p}{)} \PY{o}{+} 
+            \PY{n+nf}{theme\PYZus{}linedraw}\PY{p}{(}\PY{p}{)}
+\end{Verbatim}
+
+
+    
+    
+    \begin{center}
+    \adjustimage{max size={0.9\linewidth}{0.9\paperheight}}{output_44_1.png}
+    \end{center}
+    { \hspace*{\fill} \\}
+    
+    \textbf{Success!} You can now return to the main page to continue
+learning.
+
+
+    % Add a bibliography block to the postdoc
+    
+    
+    
+    \end{document}
